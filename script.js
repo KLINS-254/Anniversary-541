@@ -2,9 +2,9 @@
 // EDIT YOUR PERSONAL DETAILS DIRECTLY IN THIS CONFIG BLOCK BELOW:
 // =========================================================================
 const CONFIG = {
-  herName: "My Princess",
-  myName: "Yours Forever",
-  anniversaryDate: "2023-02-14", // Format: YYYY-MM-DD
+  herName: "JOY MORAA",
+  myName: "TICOHGENERALI",
+  anniversaryDate: "2026-10-28", // Format: YYYY-MM-DD
   
   loveLetter: `My Dearest Love,\n\nFrom the moment you entered my life, everything took on a brighter color. You are my home, my peace, and my greatest adventure.\n\nThank you for being my rock, my best friend, and my favorite person to laugh with. I built this place to hold a tiny fraction of the love I feel for you every single day.\n\nHappy Anniversary, my love! ❤️`,
 
