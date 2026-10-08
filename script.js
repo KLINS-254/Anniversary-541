@@ -1,42 +1,60 @@
-// Default Configuration Data with Local .png Images and Local .mp3 Audio
-const defaultConfig = {
+// =========================================================================
+// EDIT YOUR PERSONAL DETAILS DIRECTLY IN THIS CONFIG BLOCK BELOW:
+// =========================================================================
+const CONFIG = {
   herName: "My Princess",
   myName: "Yours Forever",
-  anniversaryDate: "2023-02-14",
-  musicUrl: "song.mp3", // Change to match your song filename
+  anniversaryDate: "2023-02-14", // Format: YYYY-MM-DD
+  
   loveLetter: `My Dearest Love,\n\nFrom the moment you entered my life, everything took on a brighter color. You are my home, my peace, and my greatest adventure.\n\nThank you for being my rock, my best friend, and my favorite person to laugh with. I built this place to hold a tiny fraction of the love I feel for you every single day.\n\nHappy Anniversary, my love! ❤️`,
+
   memories: [
     { title: "The Beginning ❤️", date: "First Day", location: "Our Favorite Spot", caption: "The day my whole world changed for the better.", img: "memory1.png" },
     { title: "That Special Spark 😍", date: "A Beautiful Evening", location: "City Lights", caption: "The exact moment I realized you were the one.", img: "memory2.png" },
-    { title: "Crazy Laughs 😂❤️", date: "Weekend Getaway", location: "By the Beach", caption: "Laughing until our stomachs hurt. I live for these moments.", img: "memory3.png" }
+    { title: "Crazy Laughs 😂❤️", date: "Weekend Getaway", location: "By the Beach", caption: "Laughing until our stomachs hurt. I live for these moments.", img: "memory3.png" },
+    { title: "And All The Little Moments… 💕", date: "Everyday Magic", location: "Everywhere With You", caption: "Nothing beats just sitting next to you doing nothing.", img: "memory4.png" }
   ],
+
   achievements: [
-    { trophy: "🏆", title: "Best Couple Energy", desc: "For effortlessly matching each other's vibe everywhere we go." },
+    { trophy: "🏆", title: "Best Couple Energy Award", desc: "For effortlessly matching each other's vibe everywhere we go." },
     { trophy: "🏆", title: "Survived The Arguments Award 😂", desc: "Because hugging it out always wins in the end." },
-    { trophy: "🏆", title: "My Favorite Person Award", desc: "Undefeated champion of my heart, every single day." }
+    { trophy: "🏆", title: "Best Memories Award", desc: "For creating the most unforgettable story together." },
+    { trophy: "🏆", title: "Still Choosing Each Other Award ❤️", desc: "Day after day, without a second thought." },
+    { trophy: "🏆", title: "My Favorite Person Award", desc: "Undefeated champion of my heart, every single day." },
+    { trophy: "🏆", title: "Forever Team Award 🥰", desc: "You and me against the world." }
   ],
+
   timeline: [
     { date: "Day One", title: "The Day We Met", desc: "A simple hello that started our greatest story." },
-    { date: "First Spark", title: "First Late Night Talk", desc: "Talking for hours and realizing we never wanted it to end." },
-    { date: "Milestone", title: "First 'I Love You'", desc: "Three words that meant everything, said from the bottom of my heart." }
+    { date: "First Spark", title: "First Conversation", desc: "Talking for hours and realizing we never wanted it to end." },
+    { date: "Date Night", title: "First Date", desc: "Nervous butterflies that turned into absolute magic." },
+    { date: "Milestone", title: "First 'I Love You'", desc: "Three words that meant everything, said from the bottom of my heart." },
+    { date: "Today", title: "Our Anniversary", desc: "Celebrating us and looking forward to forever." }
   ],
+
   notes: [
     { title: "Open When You Miss Me 💌", content: "Close your eyes and take a deep breath. I am thinking about you right now and sending you the biggest hug! ❤️" },
+    { title: "Open When You're Sad 🥹", content: "Remember that you never have to face hard days alone. I am always right here by your side." },
     { title: "Open When You Need A Smile 😊", content: "Remember that time we couldn't stop laughing over nothing? Your smile is literally my favorite thing in the world." },
-    { title: "Open When You Want To Know Why I Love You 💕", content: "Because you are kind, beautiful, ridiculously funny, and you make my world complete." }
+    { title: "Open When You Want To Know Why I Love You 💕", content: "Because you are kind, beautiful, ridiculously funny, and you make my world complete." },
+    { title: "Open When You Miss Us 📸", content: "Look through our memories above. Every photo is a promise of thousands more to come." }
   ],
+
   reasons: [
     "You make ordinary moments feel like magic.",
     "Your smile can completely turn around my worst day.",
-    "You became someone I don't just love… but genuinely cherish with all my heart."
+    "You became someone I don't just love… but genuinely cherish with all my heart.",
+    "You support my dreams and believe in me even when I doubt myself."
   ]
 };
 
-// Application State
-let config = JSON.parse(localStorage.getItem('loveStoryConfig')) || defaultConfig;
-let currentReasonIndex = 0;
+// =========================================================================
+// APPLICATION LOGIC
+// =========================================================================
 
-// Initialize Web App
+let currentReasonIndex = 0;
+let musicStarted = false;
+
 document.addEventListener('DOMContentLoaded', () => {
   initBackgroundCanvas();
   loadConfigIntoUI();
@@ -50,11 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
   renderNotes();
   initReasonsCarousel();
   initFinalSurprise();
-  initAdminModal();
   initScrollAnimations();
 });
 
-/* Canvas Background Engine */
+/* Canvas Background Star Particles */
 function initBackgroundCanvas() {
   const canvas = document.getElementById('bg-canvas');
   const ctx = canvas.getContext('2d');
@@ -68,9 +85,7 @@ function initBackgroundCanvas() {
   resize();
 
   class Particle {
-    constructor() {
-      this.reset();
-    }
+    constructor() { this.reset(); }
     reset() {
       this.x = Math.random() * canvas.width;
       this.y = canvas.height + Math.random() * 20;
@@ -99,34 +114,39 @@ function initBackgroundCanvas() {
   animate();
 }
 
-/* UI Data Loader */
+/* Load Static Code Config into HTML elements */
 function loadConfigIntoUI() {
-  document.getElementById('display-letter-text').innerText = config.loveLetter;
-  document.getElementById('display-letter-sign').innerText = `Forever Yours, ${config.myName} ❤️`;
-  document.getElementById('display-anniversary-date').innerText = new Date(config.anniversaryDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  document.getElementById('her-name-greeting').innerText = CONFIG.herName;
+  document.getElementById('display-letter-text').innerText = CONFIG.loveLetter;
+  document.getElementById('display-letter-sign').innerText = `Forever Yours, ${CONFIG.myName} ❤️`;
   
-  const audioSource = document.getElementById('audio-source');
-  if (audioSource) {
-    audioSource.src = config.musicUrl;
-    document.getElementById('bg-music').load();
-  }
-  
-  // Admin inputs preset
-  document.getElementById('cfg-herName').value = config.herName;
-  document.getElementById('cfg-myName').value = config.myName;
-  document.getElementById('cfg-anniversaryDate').value = config.anniversaryDate;
-  document.getElementById('cfg-musicUrl').value = config.musicUrl;
-  document.getElementById('cfg-loveLetter').value = config.loveLetter;
+  const parsedDate = new Date(CONFIG.anniversaryDate);
+  document.getElementById('display-anniversary-date').innerText = parsedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 }
 
-/* Audio Player */
+/* Audio Player and Autoplay on First Interaction */
 function initAudioPlayer() {
   const btn = document.getElementById('audio-control');
   const audio = document.getElementById('bg-music');
   
-  btn.addEventListener('click', () => {
+  function tryPlayMusic() {
+    if (!musicStarted) {
+      audio.play().then(() => {
+        musicStarted = true;
+        btn.classList.add('playing');
+      }).catch(() => {});
+    }
+  }
+
+  // Trigger auto-play on first tap anywhere
+  window.addEventListener('click', tryPlayMusic, { once: true });
+  window.addEventListener('touchstart', tryPlayMusic, { once: true });
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
     if (audio.paused) {
-      audio.play().catch(e => console.log("Audio play deferred:", e));
+      audio.play();
+      musicStarted = true;
       btn.classList.add('playing');
     } else {
       audio.pause();
@@ -135,7 +155,7 @@ function initAudioPlayer() {
   });
 }
 
-/* Envelope Interaction */
+/* Envelope Letter Interaction */
 function initEnvelope() {
   const envelope = document.getElementById('envelope');
   const closeBtn = document.getElementById('close-letter-btn');
@@ -143,19 +163,18 @@ function initEnvelope() {
   envelope.addEventListener('click', (e) => {
     if (e.target !== closeBtn && !envelope.classList.contains('open')) {
       envelope.classList.add('open');
-      createSparkles(e.clientX, e.clientY);
+      createSparkles(e.clientX || window.innerWidth / 2, e.clientY || window.innerHeight / 2);
     }
   });
 
   closeBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     envelope.classList.remove('open');
-    document.querySelectorAll('.section-padding').forEach(sec => sec.classList.remove('hidden'));
     document.getElementById('anniversary').scrollIntoView({ behavior: 'smooth' });
   });
 }
 
-/* Sparkle Effects */
+/* Sparkle Floating Effect */
 function createSparkles(x, y) {
   for (let i = 0; i < 15; i++) {
     const el = document.createElement('div');
@@ -177,10 +196,10 @@ function createSparkles(x, y) {
   }
 }
 
-/* Countdown Logic */
+/* Live Anniversary Countdown */
 function initCountdown() {
   function update() {
-    const start = new Date(config.anniversaryDate).getTime();
+    const start = new Date(CONFIG.anniversaryDate).getTime();
     const now = new Date().getTime();
     const diff = now - start;
 
@@ -195,16 +214,16 @@ function initCountdown() {
   setInterval(update, 1000);
 }
 
-/* Memories Cards Render */
+/* Render Photo Memories */
 function renderMemories() {
   const grid = document.getElementById('memories-grid');
   grid.innerHTML = '';
 
-  config.memories.forEach((mem) => {
+  CONFIG.memories.forEach((mem) => {
     const card = document.createElement('div');
     card.className = 'memory-card glass-card';
     card.innerHTML = `
-      <img src="${mem.img}" alt="${mem.title}" onerror="this.src='https://via.placeholder.com/400x300.png?text=Memory+.png'">
+      <img src="${mem.img}" alt="${mem.title}" onerror="this.src='https://via.placeholder.com/400x300.png?text=Add+PNG+Photo'">
       <div class="memory-info">
         <h4>${mem.title}</h4>
         <p class="meta">${mem.date} • ${mem.location}</p>
@@ -229,7 +248,7 @@ document.querySelector('.lightbox-close').addEventListener('click', () => {
   document.getElementById('lightbox-modal').classList.remove('active');
 });
 
-/* Image Comparison Slider */
+/* Touch / Mouse Image Comparison Slider */
 function initImageSlider() {
   const slider = document.getElementById('image-slider');
   const afterWrapper = slider.querySelector('.img-after-wrapper');
@@ -255,12 +274,12 @@ function initImageSlider() {
   window.addEventListener('touchmove', (e) => { if (isDragging) move(e.touches[0].clientX); });
 }
 
-/* Achievements Render */
+/* Render Trophy Achievements */
 function renderAchievements() {
   const container = document.getElementById('podium-container');
   container.innerHTML = '';
 
-  config.achievements.forEach(ach => {
+  CONFIG.achievements.forEach(ach => {
     const item = document.createElement('div');
     item.className = 'trophy-item glass-card';
     item.innerHTML = `
@@ -274,12 +293,12 @@ function renderAchievements() {
   });
 }
 
-/* Timeline Render */
+/* Render Timeline */
 function renderTimeline() {
   const wrapper = document.getElementById('timeline-wrapper');
   wrapper.innerHTML = '';
 
-  config.timeline.forEach(item => {
+  CONFIG.timeline.forEach(item => {
     const node = document.createElement('div');
     node.className = 'timeline-node';
     node.innerHTML = `
@@ -293,12 +312,12 @@ function renderTimeline() {
   });
 }
 
-/* Love Notes Render */
+/* Render Love Notes */
 function renderNotes() {
   const grid = document.getElementById('notes-grid');
   grid.innerHTML = '';
 
-  config.notes.forEach(note => {
+  CONFIG.notes.forEach(note => {
     const card = document.createElement('div');
     card.className = 'note-card glass-card';
     card.innerHTML = `
@@ -327,17 +346,17 @@ function initReasonsCarousel() {
   const counterEl = document.getElementById('reason-counter');
 
   function update() {
-    textEl.innerText = config.reasons[currentReasonIndex];
-    counterEl.innerText = `${currentReasonIndex + 1} / ${config.reasons.length}`;
+    textEl.innerText = CONFIG.reasons[currentReasonIndex];
+    counterEl.innerText = `${currentReasonIndex + 1} / ${CONFIG.reasons.length}`;
   }
 
   document.getElementById('prev-reason').addEventListener('click', () => {
-    currentReasonIndex = (currentReasonIndex - 1 + config.reasons.length) % config.reasons.length;
+    currentReasonIndex = (currentReasonIndex - 1 + CONFIG.reasons.length) % CONFIG.reasons.length;
     update();
   });
 
   document.getElementById('next-reason').addEventListener('click', () => {
-    currentReasonIndex = (currentReasonIndex + 1) % config.reasons.length;
+    currentReasonIndex = (currentReasonIndex + 1) % CONFIG.reasons.length;
     update();
   });
 
@@ -361,7 +380,7 @@ function initFinalSurprise() {
   });
 }
 
-/* Canvas Confetti Fireworks Engine */
+/* Confetti Fireworks Engine */
 function triggerConfetti() {
   const canvas = document.getElementById('confetti-canvas');
   const ctx = canvas.getContext('2d');
@@ -371,12 +390,12 @@ function triggerConfetti() {
   let pieces = [];
   const emojis = ['😍', '😘', '🥰', '❤️', '💕', '✨', '🏆', '🎉'];
 
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 120; i++) {
     pieces.push({
       x: canvas.width / 2,
       y: canvas.height / 2,
-      vx: (Math.random() - 0.5) * 15,
-      vy: (Math.random() - 0.5) * 15,
+      vx: (Math.random() - 0.5) * 16,
+      vy: (Math.random() - 0.5) * 16,
       size: Math.random() * 20 + 15,
       emoji: emojis[Math.floor(Math.random() * emojis.length)],
       opacity: 1
@@ -390,7 +409,7 @@ function triggerConfetti() {
     pieces.forEach(p => {
       p.x += p.vx;
       p.y += p.vy;
-      p.vy += 0.1; // gravity
+      p.vy += 0.1;
       p.opacity -= 0.008;
 
       if (p.opacity > 0) {
@@ -406,28 +425,7 @@ function triggerConfetti() {
   draw();
 }
 
-/* Admin / Customizer Panel Controls */
-function initAdminModal() {
-  const modal = document.getElementById('admin-modal');
-  document.getElementById('admin-toggle').addEventListener('click', () => modal.classList.add('active'));
-  document.getElementById('admin-close').addEventListener('click', () => modal.classList.remove('active'));
-
-  document.getElementById('admin-form').addEventListener('submit', (e) => {
-    e.preventDefault();
-    config.herName = document.getElementById('cfg-herName').value;
-    config.myName = document.getElementById('cfg-myName').value;
-    config.anniversaryDate = document.getElementById('cfg-anniversaryDate').value;
-    config.musicUrl = document.getElementById('cfg-musicUrl').value;
-    config.loveLetter = document.getElementById('cfg-loveLetter').value;
-
-    localStorage.setItem('loveStoryConfig', JSON.stringify(config));
-    loadConfigIntoUI();
-    modal.classList.remove('active');
-    alert("Love story dynamic settings updated! ❤️");
-  });
-}
-
-/* Reveal Scroll Trigger */
+/* Scroll Trigger Animations */
 function initScrollAnimations() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
