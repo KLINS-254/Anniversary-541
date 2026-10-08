@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Our Love Story ❤️ — From Then To Forever</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Cinzel:wght@500;700&family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Floating Particles Canvas -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Ambient Audio Player -->
+  <div class="audio-control" id="audio-control" title="Toggle Romantic Music">
+    <i class="fa-solid fa-music"></i>
+    <div class="audio-pulse"></div>
+  </div>
+  <!-- Local MP3 Audio File -->
+  <audio id="bg-music" loop preload="auto">
+    <source id="audio-source" src="song.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Admin Toggle Button -->
+  <button id="admin-toggle" class="admin-fab" title="Edit Site Content">
+    <i class="fa-solid fa-gear"></i>
+  </button>
+
+  <!-- Admin Modal / Editor Panel -->
+  <div class="admin-modal" id="admin-modal">
+    <div class="admin-content glass-card">
+      <div class="admin-header">
+        <h3><i class="fa-solid fa-pen-to-square"></i> Customize Your Story</h3>
+        <button id="admin-close" class="close-btn">&times;</button>
+      </div>
+      <div class="admin-body">
+        <form id="admin-form">
+          <div class="form-group">
+            <label>Her Name</label>
+            <input type="text" id="cfg-herName">
+          </div>
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" id="cfg-myName">
+          </div>
+          <div class="form-group">
+            <label>Anniversary Date (YYYY-MM-DD)</label>
+            <input type="date" id="cfg-anniversaryDate">
+          </div>
+          <div class="form-group">
+            <label>Local Song Filename (e.g. song.mp3)</label>
+            <input type="text" id="cfg-musicUrl" placeholder="song.mp3">
+          </div>
+          <div class="form-group">
+            <label>Opening Love Letter</label>
+            <textarea id="cfg-loveLetter" rows="6"></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Save Changes ❤️</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <main class="app-container">
+
+    <!-- 1. OPENING SCREEN — THE SURPRISE -->
+    <section id="hero" class="full-screen-section active">
+      <div class="hero-content">
+        <h2 class="sub-greeting">Hey My Love… ❤️</h2>
+        <p class="hero-subtext">I made something for you.<br>Not just a website… but a little journey through us.</p>
+        
+        <div class="envelope-wrapper" id="envelope-wrapper">
+          <div class="envelope" id="envelope">
+            <div class="envelope-flap"></div>
+            <div class="envelope-pocket"></div>
+            <div class="envelope-letter" id="envelope-letter">
+              <div class="letter-inner">
+                <span class="letter-seal"><i class="fa-solid fa-heart"></i></span>
+                <p class="handwritten-text" id="display-letter-text">Loading love letter...</p>
+                <div class="letter-footer">
+                  <span id="display-letter-sign">Forever Yours ❤️</span>
+                  <button class="btn-secondary" id="close-letter-btn">Continue Our Story ↓</button>
+                </div>
+              </div>
+            </div>
+            <div class="envelope-click-notice">
+              <i class="fa-solid fa-envelope-open-text"></i>
+              <span>💌 OPEN MY LETTER</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. OUR ANNIVERSARY -->
+    <section id="anniversary" class="section-padding hidden">
+      <div class="section-title">
+        <h2>Our Story</h2>
+        <div class="title-underline"></div>
+      </div>
+      
+      <div class="countdown-card glass-card">
+        <h3 class="date-display" id="display-anniversary-date">Loading date...</h3>
+        <p class="countdown-label">Time We've Spent Together In Love:</p>
+        
+        <div class="countdown-grid">
+          <div class="time-box"><span id="days">00</span><p>Days</p></div>
+          <div class="time-box"><span id="hours">00</span><p>Hours</p></div>
+          <div class="time-box"><span id="minutes">00</span><p>Minutes</p></div>
+          <div class="time-box"><span id="seconds">00</span><p>Seconds</p></div>
+        </div>
+        
+        <p class="countdown-subtext">“Another chapter of us… and hopefully countless more to come. ❤️”</p>
+      </div>
+    </section>
+
+    <!-- 3. OUR MEMORIES -->
+    <section id="memories" class="section-padding hidden">
+      <div class="section-title">
+        <h2>Remember When… 🥰</h2>
+        <p class="subtitle">Every moment with you is saved in my heart</p>
+      </div>
+
+      <div class="memories-grid" id="memories-grid">
+        <!-- Dynamically rendered memory cards using local .png files -->
+      </div>
+    </section>
+
+    <!-- 4. "BACK THEN" MEMORY SECTION -->
+    <section id="back-then" class="section-padding hidden">
+      <div class="section-title">
+        <h2>Look How Far We’ve Come… 🥹</h2>
+        <p class="subtitle">Swipe the handle to see our transformation through time</p>
+      </div>
+
+      <div class="slider-container glass-card">
+        <div class="image-comparison-slider" id="image-slider">
+          <!-- Local .png Before and After Images -->
+          <img src="before.png" alt="Then" class="img-before" onerror="this.src='https://via.placeholder.com/600x400.png?text=Add+before.png'">
+          <div class="img-after-wrapper">
+            <img src="after.png" alt="Now" class="img-after" onerror="this.src='https://via.placeholder.com/600x400.png?text=Add+after.png'">
+          </div>
+          <div class="slider-handle">
+            <i class="fa-solid fa-arrows-left-right"></i>
+          </div>
+        </div>
+        <p class="slider-caption">“We may have changed with time, but one thing still feels the same… <strong>US. ❤️</strong>”</p>
+      </div>
+    </section>
+
+    <!-- 5. LOVE ACHIEVEMENTS -->
+    <section id="achievements" class="section-padding hidden">
+      <div class="section-title">
+        <h2>Things We’ve Won Together 🏆❤️</h2>
+        <p class="subtitle">Awards given to the world's best partner</p>
+      </div>
+
+      <div class="podium-container" id="podium-container">
+        <!-- Dynamically populated trophies -->
+      </div>
+    </section>
+
+    <!-- 6. OUR LOVE TIMELINE -->
+    <section id="timeline" class="section-padding hidden">
+      <div class="section-title">
+        <h2>How It All Happened… 💕</h2>
+        <p class="subtitle">Click any milestone to open the memory</p>
+      </div>
+
+      <div class="timeline-wrapper" id="timeline-wrapper">
+        <!-- Dynamically populated timeline nodes -->
+      </div>
+    </section>
+
+    <!-- 7. LITTLE LOVE NOTES -->
+    <section id="love-notes" class="section-padding hidden">
+      <div class="section-title">
+        <h2>Little Love Notes 💌</h2>
+        <p class="subtitle">Open these whenever you need me</p>
+      </div>
+
+      <div class="notes-grid" id="notes-grid">
+        <!-- Dynamically populated love note envelopes -->
+      </div>
+    </section>
+
+    <!-- 8. "WHY I LOVE YOU" -->
+    <section id="why-i-love-you" class="section-padding hidden">
+      <div class="section-title">
+        <h2>Why I Love You ❤️</h2>
+        <p class="subtitle">Just a few of the millions of reasons...</p>
+      </div>
+
+      <div class="reasons-carousel" id="reasons-carousel">
+        <div class="reason-card glass-card">
+          <i class="fa-solid fa-quote-left quote-icon"></i>
+          <p id="current-reason-text">You make ordinary moments feel special.</p>
+          <div class="carousel-controls">
+            <button id="prev-reason" class="btn-icon"><i class="fa-solid fa-chevron-left"></i></button>
+            <span id="reason-counter">1 / 3</span>
+            <button id="next-reason" class="btn-icon"><i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. FINAL SURPRISE -->
+    <section id="final-surprise" class="section-padding hidden">
+      <div class="finale-content glass-card">
+        <p class="finale-line-1">And after all these memories…</p>
+        <p class="finale-line-2 hidden-text">I would still choose you.</p>
+        <p class="finale-line-3 hidden-text">Yesterday. Today. Tomorrow.<br>And every chapter after that. ❤️</p>
+
+        <button id="grand-reveal-btn" class="btn-glow">❤️ ONE LAST THING…</button>
+
+        <div id="grand-celebration" class="grand-celebration hidden">
+          <h1 class="sparkle-title">HAPPY OUR LOVE ANNIVERSARY, MY LOVE. ❤️</h1>
+          <p class="finale-footer">This isn't the end of our story.<br>It's another beautiful chapter.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Photo Lightbox Modal -->
+  <div class="lightbox-modal" id="lightbox-modal">
+    <span class="lightbox-close">&times;</span>
+    <div class="lightbox-content glass-card">
+      <img id="lightbox-img" src="" alt="Memory">
+      <h3 id="lightbox-title"></h3>
+      <p id="lightbox-meta"></p>
+      <p id="lightbox-caption"></p>
+    </div>
+  </div>
+
+  <!-- Love Note Popup Modal -->
+  <div class="note-modal" id="note-modal">
+    <div class="note-modal-content glass-card">
+      <span class="note-close">&times;</span>
+      <div class="note-modal-header">
+        <i class="fa-solid fa-envelope-open-text"></i>
+        <h3 id="note-modal-title">Love Note</h3>
+      </div>
+      <p id="note-modal-body" class="handwritten-text"></p>
+    </div>
+  </div>
+
+  <!-- Canvas Confetti Engine -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <script src="script.js"></script>
+</body>
+</html>
